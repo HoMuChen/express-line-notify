@@ -1,6 +1,6 @@
 {
   "name": "express-line-notify",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A express middleware that handle line notify oauth2 authentication and set req.line-notify-access-token attribute",
   "main": "index.js",
   "scripts": {
