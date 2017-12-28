@@ -9,7 +9,7 @@ Middleware that authenticates line's oauth and sets `req.line-notify-access-toke
 ## Usage
 
 The authentication middleware go throught line oauth process.
-If success, `req.line-notify-access-token` will be set with the return access_token,
+If success, `req['line-notify-access-token']` will be set with the return access_token,
 and can be used by later middleware for pushing notification.
 
 For example,
@@ -25,7 +25,7 @@ var config = {
 app.get('/linenotify',
   lineNotify(config),
   function(req, res) {
-    const token = req.line-notify-access-token;
+    const token = req['line-notify-access-token'];
     //...
   });
 ```
