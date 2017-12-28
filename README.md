@@ -22,7 +22,7 @@ var config = {
   clientSecret:  'your-line-notify-client-secret'
 }
 
-app.get('/linenotify',
+app.use('/linenotify',
   lineNotify(config),
   function(req, res) {
     const token = req['line-notify-access-token'];
@@ -30,7 +30,36 @@ app.get('/linenotify',
   });
 ```
 
+Due to oauth2 redirect mechanism, the req object is missing.
+The later middleware will get the different req object.
+If you want keep some data to use for later middleware,
+put them into `req['context']`
+
+For example,
+
+```javascript
+var lineNotify = require('express-line-notify');
+
+var config = {
+  clientId:      'your-line-notify-client-id',
+  clientSecret:  'your-line-notify-client-secret'
+}
+
+//curl ~host/linenotify?userid=123&email=456
+app.use('/linenotify',
+  function(req, res) {
+    req['context'] = req.query;    //store whatever in query string
+    next();
+  },
+  lineNotify(config),
+  function(req, res) {
+    const token = req['line-notify-access-token'];
+    const data = req['context']    //data will be { userid: "123", email: "456" }
+    //...
+  });
+```
+
 
 ## Author
 
-[HoMuchen](b98901052@ntu.edu.tw)
+HoMuchen

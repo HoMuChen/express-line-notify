@@ -5,9 +5,9 @@ const querystring = require('querystring');
 const { do_redirect, run_request } = require('./utils');
 
 const lineNotification = config => (req, res, next) => {
-  const request_url = url.parse(req.url, true);
+  const request_url = url.parse(req.originalUrl, true);
   const return_url = url.format({
-    protocol: 'https',
+    protocol: req.protocol,
     host: req.headers.host,
     pathname: request_url.pathname,
   });
@@ -21,10 +21,17 @@ const lineNotification = config => (req, res, next) => {
   }
 
   if (!code) {
-    do_redirect(res, make_acquire_url(config, return_url));
+    let reqContext = JSON.stringify({});
+    if (req.context) {
+      reqContext = JSON.stringify(req.context);
+    }
+
+    do_redirect(res, make_acquire_url(config, reqContext, return_url));
   }
 
   if (code) {
+    const reqContext = JSON.parse(state);
+
     run_request(make_token_request(config, code, return_url))
       .then(data => {
         const info = JSON.parse(data);
@@ -32,6 +39,7 @@ const lineNotification = config => (req, res, next) => {
         return accessToken;
       })
       .then(accessToken => {
+        req['context'] = reqContext;
         req['line-notify-access-token'] = accessToken;
         next();
       })
@@ -41,7 +49,7 @@ const lineNotification = config => (req, res, next) => {
   }
 };
 
-const make_acquire_url = (config, redirect_uri) =>
+const make_acquire_url = (config, reqContext, redirect_uri) =>
   url.format({
     protocol: 'https',
     host: 'notify-bot.line.me',
@@ -51,7 +59,7 @@ const make_acquire_url = (config, redirect_uri) =>
       client_id: config.clientId,
       redirect_uri,
       scope: 'notify',
-      state: 'tmp_state',
+      state: reqContext,
     },
   });
 

@@ -1,10 +1,9 @@
 {
   "name": "express-line-notify",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A express middleware that handle line notify oauth2 authentication and set req.line-notify-access-token attribute",
   "main": "index.js",
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/HoMuChen/express-line-notify.git"
@@ -13,8 +12,10 @@
     "auth",
     "authentication",
     "express",
-    "oauth",
-    "line notify"
+    "middleware",
+    "oauth2",
+    "line notify",
+    "token"
   ],
   "author": "HoMuChen",
   "license": "ISC",
