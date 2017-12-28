@@ -1,4 +1,4 @@
-# express-jwt
+# express-line-notify
 
 Middleware that authenticates line's oauth and sets `req.line-notify-access-token`.
 
