@@ -3,7 +3,9 @@
   "version": "1.0.2",
   "description": "A express middleware that handle line notify oauth2 authentication and set req.line-notify-access-token attribute",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "pretest": "eslint --ignore-path .gitignore ."
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/HoMuChen/express-line-notify.git"
@@ -22,5 +24,9 @@
   "bugs": {
     "url": "https://github.com/HoMuChen/express-line-notify/issues"
   },
-  "homepage": "https://github.com/HoMuChen/express-line-notify#readme"
+  "homepage": "https://github.com/HoMuChen/express-line-notify#readme",
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-strongloop": "^2.1.0"
+  }
 }
