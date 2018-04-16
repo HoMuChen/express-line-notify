@@ -47,7 +47,7 @@ var config = {
 
 //curl ~host/linenotify?userid=123&email=456
 app.use('/linenotify',
-  function(req, res) {
+  function(req, res, next) {
     req['context'] = req.query;    //store whatever in query string
     next();
   },
